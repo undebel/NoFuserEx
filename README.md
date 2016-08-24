@@ -10,7 +10,7 @@ Just drag and drop any file(s) onto NoFuserEx.exe.
 * Anti-tamper
 * Working on more
 
-## Credits
+## Special thanks
 * 0xd4d - dnlib
 * yck1509 - some code
 * Alcatraz3222 - because yes :P
