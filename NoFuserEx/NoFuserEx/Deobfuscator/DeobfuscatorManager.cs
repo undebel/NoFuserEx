@@ -20,11 +20,14 @@ namespace NoFuserEx.Deobfuscator {
                 deobfuscators.Add(new CompressorDeobfuscator());
                 Logger.VeryVerbose("Added compressor deobfuscator.");
             }
-
+            
             if (!Options.NoTamper) {
                 deobfuscators.Add(new AntiTamperDeobfuscator());
                 Logger.VeryVerbose("Added anti-tamper deobfuscator.");
             }
+
+            deobfuscators.Add(new AntiDumperDeobfuscator());
+            Logger.VeryVerbose("Added anti-dumper deobfuscator.");
         }
 
         internal void Start() {

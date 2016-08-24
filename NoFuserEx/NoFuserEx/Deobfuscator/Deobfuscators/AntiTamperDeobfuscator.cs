@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using MethodAttributes = dnlib.DotNet.MethodAttributes;
+using MethodImplAttributes = dnlib.DotNet.MethodImplAttributes;
 
 namespace NoFuserEx.Deobfuscator.Deobfuscators {
     internal class AntiTamperDeobfuscator : IDeobfuscator {
@@ -86,14 +87,18 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                                                     MethodAttributes.HideBySig;
                 if (tamperMethod.Attributes != attributes)
                     continue;
-                if (tamperMethod.CodeType != dnlib.DotNet.MethodImplAttributes.IL)
+                if (tamperMethod.CodeType != MethodImplAttributes.IL)
                     continue;
 
                 if (tamperMethod.ReturnType.ElementType != ElementType.Void)
                     continue;
 
+                // The decrypter method just have 1 call to VirtualProtect
+                if (tamperMethod.FindInstructionsNumber(OpCodes.Call, "(System.IntPtr,System.UInt32,System.UInt32,System.UInt32&)") != 1)
+                    continue;
                 instr.OpCode = OpCodes.Nop;
                 instr.Operand = null;
+                Logger.Verbose("Anti-tamper decrypter call was removed from .cctor.");
                 return;
             }
         }
