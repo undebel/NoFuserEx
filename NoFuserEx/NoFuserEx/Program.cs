@@ -13,28 +13,29 @@ namespace NoFuserEx {
                 Logger.Exit();
             }
 
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
+            var files = GetOptions(args);
+            foreach (var file in files) {
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
 
-            var file = GetOptions(args);
-            var assemblyManager = new AssemblyManager(file);
-            assemblyManager.LoadAssembly();
-            var deobfuscator = new Deobfuscator.DeobfuscatorManager(assemblyManager);
-            deobfuscator.Start();
-            assemblyManager.SaveAssembly();
-            Options.RestoreOptions();
+                var assemblyManager = new AssemblyManager(file);
+                assemblyManager.LoadAssembly();
+                var deobfuscator = new Deobfuscator.DeobfuscatorManager(assemblyManager);
+                deobfuscator.Start();
+                assemblyManager.SaveAssembly();
+                Options.RestoreOptions();
 
-            stopWatch.Stop();
-            Logger.WriteLine(string.Empty);
-            Logger.Info(
-                $"Elapsed time: {stopWatch.Elapsed.Minutes}:{stopWatch.Elapsed.Seconds}:{stopWatch.Elapsed.Milliseconds}");
-
+                stopWatch.Stop();
+                Logger.Info(
+                    $"Elapsed time: {stopWatch.Elapsed.Minutes}:{stopWatch.Elapsed.Seconds}:{stopWatch.Elapsed.Milliseconds}");
+                Logger.WriteLine(string.Empty);
+            }
 
             Logger.Exit();
         }
 
-        static string GetOptions(IEnumerable<string> args) {
-            string file = null;
+        static IEnumerable<string> GetOptions(IEnumerable<string> args) {
+            var files = new List<string>();
             Logger.Verbose("Checking options...");
             foreach (var arg in args) {
                 switch (arg) {
@@ -90,7 +91,7 @@ namespace NoFuserEx {
                             case ".dll":
                             case ".netmodule":
                                 Logger.VeryVerbose($"Extension file: {extension}");
-                                file = arg;
+                                files.Add(arg);
                                 break;
                             default:
                                 throw new Exception("Invalid file extension!");
@@ -98,7 +99,7 @@ namespace NoFuserEx {
                         break;
                 }
             }
-            return file;
+            return files;
         }
     }
 }

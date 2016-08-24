@@ -107,7 +107,6 @@ This is an open-source, if you paid for this, you got ripped off :P");
 
         internal static void Exit() {
             if (IsN00bUser()) {
-                WriteLine(string.Empty);
                 Info("Press any key to exit...");
                 Console.ReadKey(true);
             }

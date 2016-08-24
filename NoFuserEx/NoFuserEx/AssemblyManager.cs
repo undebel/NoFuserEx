@@ -12,8 +12,13 @@ namespace NoFuserEx {
         internal AssemblyManager(string inputFile) {
             this.inputFile = inputFile;
             outputFile =
-                $"{Path.GetDirectoryName(inputFile)}\\{Path.GetFileNameWithoutExtension(inputFile)}-deob{Path.GetExtension(inputFile)}";
+                $"{Path.GetDirectoryName(inputFile)}\\NoFuserEx_Output\\{Path.GetFileName(inputFile)}";
             Logger.VeryVerbose($"Output assembly: {outputFile}.");
+
+            if (Utils.CreateDirectory(Path.GetDirectoryName(outputFile)))
+                Logger.VeryVerbose("Created output directory.");
+            else
+                Logger.Exception(new Exception("Error creating directory..."));
         }
 
         internal ModuleDefMD Module { get; set; }
