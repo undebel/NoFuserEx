@@ -28,6 +28,9 @@ namespace NoFuserEx.Deobfuscator {
 
             deobfuscators.Add(new AntiDumperDeobfuscator());
             Logger.VeryVerbose("Added anti-dumper deobfuscator.");
+
+            deobfuscators.Add(new AntiDebuggerDeobfuscator());
+            Logger.VeryVerbose("Added anti-debugger deobfuscator.");
         }
 
         internal void Start() {
