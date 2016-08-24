@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AssemblyManager.cs" />
     <Compile Include="Deobfuscator\AssemblyCreator.cs" />
+    <Compile Include="Deobfuscator\Deobfuscators\AntiDebuggerDeobfuscator.cs" />
     <Compile Include="Deobfuscator\IDeobfuscator.cs" />
     <Compile Include="Deobfuscator\DeobfuscatorManager.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\AntiDumperDeobfuscator.cs" />
@@ -59,12 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\dnlib\src\dnlib.csproj">
-      <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
-      <Name>dnlib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
