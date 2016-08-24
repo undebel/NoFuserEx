@@ -1,0 +1,3 @@
+[submodule "NoFuserEx/dnlib"]
+	path = NoFuserEx/dnlib
+	url = https://github.com/CodeShark-Dev/dnlib.git
