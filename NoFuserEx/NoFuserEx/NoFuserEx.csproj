@@ -46,6 +46,7 @@
     <Compile Include="AssemblyManager.cs" />
     <Compile Include="Deobfuscator\AssemblyCreator.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\AntiDebuggerDeobfuscator.cs" />
+    <Compile Include="Deobfuscator\Deobfuscators\ConstantsDeobfuscation.cs" />
     <Compile Include="Deobfuscator\IDeobfuscator.cs" />
     <Compile Include="Deobfuscator\DeobfuscatorManager.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\AntiDumperDeobfuscator.cs" />

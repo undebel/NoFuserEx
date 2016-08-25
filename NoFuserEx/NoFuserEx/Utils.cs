@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace NoFuserEx {
     internal static class Utils {
@@ -9,9 +10,10 @@ namespace NoFuserEx {
                 Directory.CreateDirectory(directory);
                 return true;
             }
-            catch {
-                return false;
+            catch (Exception ex){
+                Logger.Exception(ex);
             }
+            return false;
         }
     }
 }

@@ -32,7 +32,7 @@ Some options that you can use:
 * --force-deob for force the deobfuscation.
 * --dont-unpack for don't unpack the assembly.
 * --dont-tamper for don't remove anti-tamper.
-* --dont-strings for don't decrypt the strings.
+* --dont-constants for don't decrypt the constants.
 * --dont-cflow for don't deobfuscate the control flow.
 * --dont-proxy-calls for don't replace the proxy calls.
 * --dont-remove-junk-methods for don't remove the junk methods.

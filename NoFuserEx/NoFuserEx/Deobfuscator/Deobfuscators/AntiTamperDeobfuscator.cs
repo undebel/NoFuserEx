@@ -27,12 +27,12 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                 var moduleArray = new byte[stream.Length];
                 stream.Read(moduleArray, 0, moduleArray.Length);
                 var assembly = Assembly.Load(moduleArray);
-                var entryPoint =
+                var cctor =
                     assembly.ManifestModule.ResolveMethod(module.GlobalType.FindStaticConstructor().MDToken.ToInt32());
 
                 Logger.Verbose("Decrypting methods....");
                 // Thanks alot to Alcatraz3222 for help me in load cctor without invoke :P
-                RuntimeHelpers.PrepareMethod(entryPoint.MethodHandle);
+                RuntimeHelpers.PrepareMethod(cctor.MethodHandle);
 
                 var hinstance = Marshal.GetHINSTANCE(assembly.ManifestModule);
                 var tableDecrypted = new byte[stream.Length];

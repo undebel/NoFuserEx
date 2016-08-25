@@ -31,6 +31,11 @@ namespace NoFuserEx.Deobfuscator {
 
             deobfuscators.Add(new AntiDebuggerDeobfuscator());
             Logger.VeryVerbose("Added anti-debugger deobfuscator.");
+
+            if (!Options.NoStrings) {
+                deobfuscators.Add(new ConstantsDeobfuscation());
+                Logger.VeryVerbose("Added constants deobfuscator.");
+            }
         }
 
         internal void Start() {

@@ -51,8 +51,8 @@ namespace NoFuserEx {
                         Logger.VeryVerbose("Don't decrypt anti-tampering option detected.");
                         Options.NoTamper = true;
                         break;
-                    case "--dont-strings":
-                        Logger.VeryVerbose("Don't decrypt strings option detected.");
+                    case "--dont-constants":
+                        Logger.VeryVerbose("Don't decrypt constants option detected.");
                         Options.NoStrings = true;
                         break;
                     case "--dont-cflow":
