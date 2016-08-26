@@ -8,6 +8,9 @@ Just drag and drop any file(s) onto NoFuserEx.exe.
 ## Supported protections
 * Compressor
 * Anti-tamper
+* Anti-dumper
+* Anti-debugger
+* Constants
 * Working on more
 
 ## Special thanks
