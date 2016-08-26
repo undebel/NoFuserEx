@@ -20,7 +20,7 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
             if (result == null)
                 return false;
 
-            Logger.VeryVerbose($"String decrypted: {result}.");
+            Logger.VeryVerbose($"String decrypted: {result}");
 
             valueDecrypter.OpCode = OpCodes.Nop;
             valueDecrypter.Operand = null;

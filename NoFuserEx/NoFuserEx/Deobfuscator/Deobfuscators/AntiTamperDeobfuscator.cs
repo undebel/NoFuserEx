@@ -82,6 +82,8 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                 var tamperMethod = instr.Operand as MethodDef;
                 if (tamperMethod == null)
                     continue;
+                if (!tamperMethod.DeclaringType.IsGlobalModuleType)
+                    continue;
 
                 const MethodAttributes attributes = MethodAttributes.Assembly | MethodAttributes.Static |
                                                     MethodAttributes.HideBySig;

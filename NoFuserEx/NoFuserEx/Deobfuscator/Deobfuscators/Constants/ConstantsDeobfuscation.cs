@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using MethodAttributes = dnlib.DotNet.MethodAttributes;
@@ -7,10 +8,10 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
     internal class ConstantsDeobfuscation : IDeobfuscator {
         readonly List<MethodDef> DecrypterMethods = new List<MethodDef>();
         int decryptedConstants;
-        int constantsCount;
+        int detectedConstants;
 
         public void Log() {
-            Logger.Success($"Decrypted:     {decryptedConstants}/{constantsCount} constant(s).");
+            Logger.Success($"Decrypted:     {decryptedConstants}/{detectedConstants} constant(s).");
         }
 
         void FindDecrypterMethods(ModuleDef module) {
@@ -69,7 +70,7 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
                             continue;
                         if (!DecrypterMethods.Contains(decrypterMethod))
                             continue;
-                        constantsCount++;
+                        detectedConstants++;
 
                         DecrypterBase decrypter = null;
                         if (instructions[i].Operand.ToString().Contains("System.String"))
@@ -105,7 +106,70 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
                     }
                 }
             }
-            return constantsCount > 0;
+            if (detectedConstants == decryptedConstants)
+                RemoveInitializeCall(module);
+
+            return detectedConstants > 0;
+        }
+
+        void RemoveInitializeCall(ModuleDef module) {
+            var cctor = module.GlobalType.FindStaticConstructor();
+            var instructions = cctor.Body.Instructions;
+            foreach (var instruction in instructions) {
+                if (instruction.OpCode != OpCodes.Call)
+                    continue;
+
+                var initializeMethod = instruction.Operand as MethodDef;
+                if (initializeMethod == null)
+                    continue;
+                if (!initializeMethod.DeclaringType.IsGlobalModuleType)
+                    continue;
+
+                const MethodAttributes attributes =
+                    MethodAttributes.Assembly | MethodAttributes.Static | MethodAttributes.HideBySig;
+                if (initializeMethod.Attributes != attributes)
+                    continue;
+
+                if (initializeMethod.ReturnType.ElementType != ElementType.Void)
+                    continue;
+                if (initializeMethod.HasParamDefs)
+                    continue;
+
+                if (initializeMethod.FindInstructionsNumber(OpCodes.Call,
+                        "System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray(System.Array,System.RuntimeFieldHandle)") != 1)
+                    continue;
+
+                var field = FindArrayField(module);
+                var operand = (from instr in initializeMethod.Body.Instructions
+                    where instr.OpCode == OpCodes.Stsfld
+                    let fieldArray = instr.Operand as FieldDef
+                    where fieldArray != null
+                    where field == fieldArray
+                    select instr.Operand.ToString()).FirstOrDefault();
+                
+                if (initializeMethod.FindInstructionsNumber(OpCodes.Stsfld, operand) != 1)
+                    continue;
+
+                instruction.OpCode = OpCodes.Nop;
+                instruction.Operand = null;
+                Logger.Verbose("Removed constans initialize call.");
+            }
+        }
+
+        static FieldDef FindArrayField(ModuleDef module) {
+            foreach (var field in module.GlobalType.Fields) {
+                const FieldAttributes attributes = FieldAttributes.Assembly | FieldAttributes.Static;
+                if (field.Attributes != attributes)
+                    continue;
+                
+                if (field.FieldType.ElementType != ElementType.SZArray)
+                    continue;
+                if (field.FieldType.FullName != "System.Byte[]")
+                    continue;
+
+                return field;
+            }
+            return null;
         }
     }
 }

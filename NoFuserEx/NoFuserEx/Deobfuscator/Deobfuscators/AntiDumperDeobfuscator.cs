@@ -16,6 +16,8 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                 var dumperMethod = instr.Operand as MethodDef;
                 if (dumperMethod == null)
                     continue;
+                if (!dumperMethod.DeclaringType.IsGlobalModuleType)
+                    continue;
 
                 const MethodAttributes attributes = MethodAttributes.Assembly | MethodAttributes.Static |
                                                     MethodAttributes.HideBySig;
