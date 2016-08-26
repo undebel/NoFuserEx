@@ -27,6 +27,11 @@ namespace NoFuserEx.Deobfuscator {
                 Logger.VeryVerbose("Added anti-tamper deobfuscator.");
             }
 
+            if (!Options.NoResources) {
+                deobfuscators.Add(new ResourcesDeobfuscator());
+                Logger.VeryVerbose("Added resources deobfuscator.");
+            }
+
             if (!Options.NoConstants) {
                 deobfuscators.Add(new ConstantsDeobfuscator());
                 Logger.VeryVerbose("Added constants deobfuscator.");

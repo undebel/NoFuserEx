@@ -64,6 +64,7 @@
     <Compile Include="Deobfuscator\Deobfuscators\Constants\ULongArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\UShortArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\ProxyDeobfuscator.cs" />
+    <Compile Include="Deobfuscator\Deobfuscators\ResourcesDeobfuscator.cs" />
     <Compile Include="Deobfuscator\IDeobfuscator.cs" />
     <Compile Include="Deobfuscator\DeobfuscatorManager.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\AntiDumperDeobfuscator.cs" />

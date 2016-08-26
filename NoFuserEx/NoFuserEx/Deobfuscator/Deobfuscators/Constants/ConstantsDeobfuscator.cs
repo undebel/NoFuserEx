@@ -161,7 +161,8 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
                 const FieldAttributes attributes = FieldAttributes.Assembly | FieldAttributes.Static;
                 if (field.Attributes != attributes)
                     continue;
-                
+                if (!field.DeclaringType.IsGlobalModuleType)
+                    continue;
                 if (field.FieldType.ElementType != ElementType.SZArray)
                     continue;
                 if (field.FieldType.FullName != "System.Byte[]")
