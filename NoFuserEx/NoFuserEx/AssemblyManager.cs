@@ -30,7 +30,6 @@ namespace NoFuserEx {
             using (var stream = Module.MetaData.PEImage.CreateFullStream())
                 Logger.Info($"Module Size: {GetSize(stream.Length)}");
             Logger.Info($"CLR Version: {Module.RuntimeVersion.Substring(0, 4)}");
-            Logger.WriteLine(string.Empty);
         }
 
         static string GetSize(long size) {

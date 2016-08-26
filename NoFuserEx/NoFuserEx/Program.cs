@@ -10,7 +10,7 @@ namespace NoFuserEx {
 
             if (args.Length == 0) {
                 Logger.Help();
-                Logger.Exit();
+                Logger.Exit(false);
             }
 
             var files = GetOptions(args);
@@ -20,10 +20,13 @@ namespace NoFuserEx {
 
                 var assemblyManager = new AssemblyManager(file);
                 assemblyManager.LoadAssembly();
+
+                Logger.Info($"File queue: {files.IndexOf(file) + 1}/{files.Count}");
+                Logger.WriteLine(string.Empty);
+
                 var deobfuscator = new Deobfuscator.DeobfuscatorManager(assemblyManager);
                 deobfuscator.Start();
                 assemblyManager.SaveAssembly();
-                Options.RestoreOptions();
 
                 stopWatch.Stop();
                 Logger.Info(
@@ -34,7 +37,7 @@ namespace NoFuserEx {
             Logger.Exit();
         }
 
-        static IEnumerable<string> GetOptions(IEnumerable<string> args) {
+        static List<string> GetOptions(IEnumerable<string> args) {
             var files = new List<string>();
             Logger.Verbose("Checking options...");
             foreach (var arg in args) {
@@ -53,7 +56,7 @@ namespace NoFuserEx {
                         break;
                     case "--dont-constants":
                         Logger.VeryVerbose("Don't decrypt constants option detected.");
-                        Options.NoStrings = true;
+                        Options.NoConstants = true;
                         break;
                     case "--dont-cflow":
                         Logger.VeryVerbose("Don't deobfuscate control flow option detected.");

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using dnlib.DotNet;
 using NoFuserEx.Deobfuscator.Deobfuscators;
+using NoFuserEx.Deobfuscator.Deobfuscators.Constants;
 
 namespace NoFuserEx.Deobfuscator {
     internal class DeobfuscatorManager {
@@ -32,7 +33,7 @@ namespace NoFuserEx.Deobfuscator {
             deobfuscators.Add(new AntiDebuggerDeobfuscator());
             Logger.VeryVerbose("Added anti-debugger deobfuscator.");
 
-            if (!Options.NoStrings) {
+            if (!Options.NoConstants) {
                 deobfuscators.Add(new ConstantsDeobfuscation());
                 Logger.VeryVerbose("Added constants deobfuscator.");
             }

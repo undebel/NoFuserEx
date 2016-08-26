@@ -74,7 +74,7 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                 Logger.Verbose($"Is packed with ConfuserEx, module packed: {name}.");
                 return true;
             }
-            Logger.Verbose("Packer not detected.");
+            Logger.Verbose("Compressor not detected.");
             return false;
         }
 

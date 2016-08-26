@@ -43,6 +43,7 @@ Some options that you can use:
 
 If something doesn't work properly, you can notify me or fix it yourself.
 This is an open-source, if you paid for this, you got ripped off :P");
+            WriteLine(string.Empty);
         }
 
         internal static void CenterWrite(string text) {
@@ -105,9 +106,13 @@ This is an open-source, if you paid for this, you got ripped off :P");
             Console.WriteLine(text);
         }
 
-        internal static void Exit() {
+        internal static void Exit(bool info = true) {
+            const string exitMessage = "Press any key to exit...";
             if (IsN00bUser()) {
-                Info("Press any key to exit...");
+                if (info)
+                    Info(exitMessage);
+                else
+                    WriteLine(exitMessage);
                 Console.ReadKey(true);
             }
             Environment.Exit(0);
