@@ -11,6 +11,7 @@ Just drag and drop any file(s) onto NoFuserEx.exe.
 * Anti-dumper
 * Anti-debugger
 * Constants
+* Proxy calls
 * Working on more
 
 ## Special thanks
