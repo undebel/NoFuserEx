@@ -27,16 +27,21 @@ namespace NoFuserEx.Deobfuscator {
                 Logger.VeryVerbose("Added anti-tamper deobfuscator.");
             }
 
+            if (!Options.NoConstants) {
+                deobfuscators.Add(new ConstantsDeobfuscator());
+                Logger.VeryVerbose("Added constants deobfuscator.");
+            }
+
+            if (!Options.NoProxyCalls) {
+                deobfuscators.Add(new ProxyDeobfuscator());
+                Logger.VeryVerbose("Added proxy deobfuscator.");
+            }
+
             deobfuscators.Add(new AntiDumperDeobfuscator());
             Logger.VeryVerbose("Added anti-dumper deobfuscator.");
 
             deobfuscators.Add(new AntiDebuggerDeobfuscator());
             Logger.VeryVerbose("Added anti-debugger deobfuscator.");
-
-            if (!Options.NoConstants) {
-                deobfuscators.Add(new ConstantsDeobfuscation());
-                Logger.VeryVerbose("Added constants deobfuscator.");
-            }
         }
 
         internal void Start() {

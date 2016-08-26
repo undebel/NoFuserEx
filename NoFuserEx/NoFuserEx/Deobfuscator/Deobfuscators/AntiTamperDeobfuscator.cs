@@ -22,7 +22,7 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
 
             if (!(bool)isTampered)
                 return false;
-            
+
             using (var stream = module.MetaData.PEImage.CreateFullStream()) {
                 var moduleArray = new byte[stream.Length];
                 stream.Read(moduleArray, 0, moduleArray.Length);

@@ -5,8 +5,8 @@ using dnlib.DotNet.Emit;
 using MethodAttributes = dnlib.DotNet.MethodAttributes;
 
 namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
-    internal class ConstantsDeobfuscation : IDeobfuscator {
-        readonly List<MethodDef> DecrypterMethods = new List<MethodDef>();
+    internal class ConstantsDeobfuscator : IDeobfuscator {
+        readonly List<MethodDef> decrypterMethods = new List<MethodDef>();
         int decryptedConstants;
         int detectedConstants;
 
@@ -37,17 +37,17 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
                         "System.Text.Encoding::GetString(System.Byte[],System.Int32,System.Int32)") != 1)
                     continue;
 
-                DecrypterMethods.Add(method);
+                decrypterMethods.Add(method);
                 Logger.Verbose($"Constant decrypter method detected: {method.FullName}.");
             }
-            Logger.Verbose($"Decrypter methods detected: {DecrypterMethods.Count}.");
+            Logger.Verbose($"Decrypter methods detected: {decrypterMethods.Count}.");
         }
 
         public bool Deobfuscate(AssemblyManager assemblyManager) {
             var module = assemblyManager.Module;
             FindDecrypterMethods(module);
 
-            if (DecrypterMethods.Count == 0) {
+            if (decrypterMethods.Count == 0) {
                 Logger.Verbose("Constants protection not detected.");
                 return false;
             }
@@ -68,7 +68,7 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators.Constants {
 
                         if (!decrypterMethod.DeclaringType.IsGlobalModuleType)
                             continue;
-                        if (!DecrypterMethods.Contains(decrypterMethod))
+                        if (!decrypterMethods.Contains(decrypterMethod))
                             continue;
                         detectedConstants++;
 

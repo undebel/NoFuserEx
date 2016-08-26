@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>nofuserex icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,7 +51,7 @@
     <Compile Include="Deobfuscator\Deobfuscators\AntiDebuggerDeobfuscator.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\ByteArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\CharArrayDecrypter.cs" />
-    <Compile Include="Deobfuscator\Deobfuscators\Constants\ConstantsDeobfuscation.cs" />
+    <Compile Include="Deobfuscator\Deobfuscators\Constants\ConstantsDeobfuscator.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\DecrypterBase.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\DoubleArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\FloatArrayDecrypter.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Deobfuscator\Deobfuscators\Constants\UIntArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\ULongArrayDecrypter.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\Constants\UShortArrayDecrypter.cs" />
+    <Compile Include="Deobfuscator\Deobfuscators\ProxyDeobfuscator.cs" />
     <Compile Include="Deobfuscator\IDeobfuscator.cs" />
     <Compile Include="Deobfuscator\DeobfuscatorManager.cs" />
     <Compile Include="Deobfuscator\Deobfuscators\AntiDumperDeobfuscator.cs" />
@@ -81,6 +85,9 @@
       <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
       <Name>dnlib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="nofuserex icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
