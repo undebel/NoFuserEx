@@ -38,12 +38,18 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                 var tableDecrypted = new byte[stream.Length];
                 Marshal.Copy(hinstance, tableDecrypted, 0, tableDecrypted.Length);
 
-                var realEntryPoint = assemblyManager.Module.EntryPoint.MDToken.Rid;
+                var entryPoint = assemblyManager.Module.EntryPoint;
+
+                uint realEntryPoint = 0;
+                if (entryPoint != null)
+                    realEntryPoint = assemblyManager.Module.EntryPoint.MDToken.Rid;
 
                 assemblyManager.Module = ModuleDefMD.Load(tableDecrypted);
                 Logger.Verbose("Have been decrypted all methods.");
 
-                assemblyManager.Module.EntryPoint = assemblyManager.Module.ResolveMethod(realEntryPoint);
+                if (realEntryPoint != 0)
+                    assemblyManager.Module.EntryPoint = assemblyManager.Module.ResolveMethod(realEntryPoint);
+
 
                 RemoveCall(assemblyManager.Module.GlobalType.FindStaticConstructor());
             }
