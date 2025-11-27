@@ -60,11 +60,14 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
         static bool? IsTampered(ModuleDefMD module) {
             var sections = module.MetaData.PEImage.ImageSectionHeaders;
 
-            if (sections.Count == 3) {
-                Logger.Verbose("Anti-tamper not detected.");
+            // There should be at least a .text and a .rsrc section
+            if (sections.Count < 3) {
+                Logger.Verbose("Anti-tamper should not be present.");
                 return false;
             }
 
+            // If more than 2 sections, test the names (the name of the section
+            // created by ConfuserEx is random)
             foreach (var section in sections) {
                 switch (section.DisplayName) {
                     case ".text":
@@ -76,6 +79,14 @@ namespace NoFuserEx.Deobfuscator.Deobfuscators {
                         return true;
                 }
             }
+            
+            // If there were only .text, .rsrc and .reloc sections
+            // Then the protection is absent
+            if (sections.Count == 3) {
+                Logger.Verbose("Anti-tamper should not detected.");
+                return false;
+            }
+            
             return null;
         }
 
